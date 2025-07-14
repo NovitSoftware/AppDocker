@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  AppDocker:
+    container_name: appdocker
+    build:
+      context: ..
+      dockerfile: dockerfile
+    image: appdocker:latest
+    # image: ghcr.io/jonathanvgms/academianovit:latest
+    ports:
+      - "8080:5000"
+    restart: unless-stopped
+    networks:
+      - app
+    secrets:
+      - db_connection_string
+    environment:
+      DB_CONNECTION_STRING_FILE: /run/secrets/db_connection_string
+
+secrets:
+  db_connection_string:
+    file: ./secrets/db_connection_string.txt
+
+networks:
+  app:
+    driver: bridge
