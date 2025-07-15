@@ -1,0 +1,16 @@
+name: GH-docker-registry-DEV
+
+on:
+  push:
+    branches: [ "main" ] 
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag appdocker:$(date +%s)
