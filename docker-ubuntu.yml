@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+  postgres:
+    container_name: postgres_db
+    image: postgres:17.5
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: MySecretPassword123!          
+    ports:
+      - "5432:5432"
+    networks:
+      - app
+    restart: unless-stopped
+
+  AppDocker:
+    container_name: appdocker    
+    depends_on:
+      - postgres
+    image: ghcr.io/jonathanvgms/academianovit:latest
+    ports:
+      - "8080:5000"
+    restart: unless-stopped
+    pull_policy: always
+    networks:
+      - app
+    environment:
+      ConnectionStrings__DefaultConnection: Host=postgres_db;Port=5432;Database=AcademiaNovitDB;Username=postgres;Password=MySecretPassword123!
+
+networks:
+  app:
+    driver: bridge
