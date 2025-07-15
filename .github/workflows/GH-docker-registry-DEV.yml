@@ -1,0 +1,22 @@
+name: GH-docker-registry-DEV
+
+on:
+  push:
+    branches: [ "main" ] 
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag appdocker:latest #--tag appdocker:$(date +%s)
+    - name: Login Registry
+      run: docker login ghcr.io -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_TOKEN }}
+    - name: Build the Docker image Github name
+      run: docker build . --file Dockerfile --tag ghcr.io/${{ secrets.REGISTRY_USERNAME }}/appdocker:latest
+    - name: Upload image to Registry
+      run: docker push ghcr.io/${{ secrets.REGISTRY_USERNAME }}/appdocker:latest
