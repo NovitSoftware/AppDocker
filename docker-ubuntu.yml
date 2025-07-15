@@ -17,7 +17,7 @@ services:
     container_name: appdocker    
     depends_on:
       - postgres
-    image: ghcr.io/jonathanvgms/academianovit:latest
+    image: ghcr.io/jonathanvgms/appdocker:latest
     ports:
       - "8080:5000"
     restart: unless-stopped
