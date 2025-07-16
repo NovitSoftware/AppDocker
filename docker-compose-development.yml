@@ -16,8 +16,8 @@ services:
   AppDocker:
     container_name: appdocker
     build:
-      context: ..
-      dockerfile: dockerfile
+      context: .
+      dockerfile: Dockerfile
     depends_on:
       - postgres
     image: appdocker:latest
