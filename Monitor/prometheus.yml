@@ -1,0 +1,17 @@
+global:
+  scrape_interval: 1m
+
+scrape_configs:
+  - job_name: 'node_exporter'
+    static_configs:
+      - targets: ['monitor-node-exporter-1:9100']
+        labels:
+          instance: 'node_exporter'
+
+  - job_name: 'cadvisor-Prod'
+    static_configs:
+      - targets: ['monitor-cadvisor-1:8080']
+        labels:
+          instance: 'cadvisor'
+
+
